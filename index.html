@@ -227,7 +227,7 @@ const apt=el('text',{x:X(-117.601),y:Y(34.0565),'text-anchor':'middle',class:'rd
 // zones: rounded hulls around each zone's core
 function hull(pts){pts=pts.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);const lo=[],up=[];for(const p of pts){while(lo.length>1&&cr(lo[lo.length-2],lo[lo.length-1],p)<=0)lo.pop();lo.push(p);}for(const p of pts.slice().reverse()){while(up.length>1&&cr(up[up.length-2],up[up.length-1],p)<=0)up.pop();up.push(p);}return lo.slice(0,-1).concat(up.slice(0,-1));}
 const med=a=>{a=a.slice().sort((x,y)=>x-y);return a[a.length>>1];};
-const Z={},core=[];
+const Z={},core=[],sat=[];
 for(let g=1;g<=12;g++){
  const ps=P.filter(p=>p.g==g),mx=med(ps.map(p=>X(p.lon))),my=med(ps.map(p=>Y(p.lat)));
  const cp=ps.filter(p=>Math.hypot(X(p.lon)-mx,Y(p.lat)-my)<1.25*MI);cp.forEach(p=>core.push(p));
@@ -237,7 +237,19 @@ for(let g=1;g<=12;g++){
  if(n<3)d=`M${cx-PAD*2} ${cy}a${PAD*2} ${PAD*2} 0 1 0 ${PAD*4} 0a${PAD*2} ${PAD*2} 0 1 0 ${-PAD*4} 0Z`;
  else{let m0=mid(ex[n-1],ex[0]);d=`M${m0[0].toFixed(1)} ${m0[1].toFixed(1)}`;for(let i=0;i<n;i++){const m=mid(ex[i],ex[(i+1)%n]);d+=`Q${ex[i][0].toFixed(1)} ${ex[i][1].toFixed(1)} ${m[0].toFixed(1)} ${m[1].toFixed(1)}`;}d+='Z';}
  const hp=el('path',{d,fill:ZC[g],'fill-opacity':.13,stroke:ZC[g],'stroke-opacity':.75,'stroke-width':1.5,'vector-effect':'non-scaling-stroke','stroke-linejoin':'round',style:'cursor:pointer'},gH);hp.__g=g;
- Z[g]={hp,cx,cy,n:ps.length};
+ Z[g]={hp,cx,cy,n:cp.length,parts:[]};
+ // satellite clusters ("pt 2", "pt 3"): buildings outside the core that sit together
+ const out=ps.filter(p=>!cp.includes(p)),cl=[];
+ for(const p of out){const q=[X(p.lon),Y(p.lat)];let hit=null;for(const c of cl){if(c.some(r=>Math.hypot(r[0]-q[0],r[1]-q[1])<0.7*MI)){hit=c;break;}}if(hit)hit.push(q);else cl.push([q]);}
+ cl.filter(c=>c.length>=2).sort((a,b)=>b.length-a.length).forEach((c,i)=>{
+  const sx=c.reduce((s,q)=>s+q[0],0)/c.length,sy=c.reduce((s,q)=>s+q[1],0)/c.length,SP=.08*MI;let sd;
+  const sh=c.length>=3?hull(c):c;
+  if(sh.length<3){const r=Math.max(SP*1.6,...c.map(q=>Math.hypot(q[0]-sx,q[1]-sy)+SP));sd=`M${sx-r} ${sy}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0Z`;}
+  else{const e=sh.map(q=>{const dx=q[0]-sx,dy=q[1]-sy,d=Math.hypot(dx,dy)||1;return [q[0]+dx/d*SP,q[1]+dy/d*SP];});const m=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];const n=e.length;let m0=m(e[n-1],e[0]);sd=`M${m0[0].toFixed(1)} ${m0[1].toFixed(1)}`;for(let j=0;j<n;j++){const mm=m(e[j],e[(j+1)%n]);sd+=`Q${e[j][0].toFixed(1)} ${e[j][1].toFixed(1)} ${mm[0].toFixed(1)} ${mm[1].toFixed(1)}`;}sd+='Z';}
+  const sp=el('path',{d:sd,fill:ZC[g],'fill-opacity':.13,stroke:ZC[g],'stroke-opacity':.8,'stroke-width':1.3,'stroke-dasharray':'4 3','vector-effect':'non-scaling-stroke','stroke-linejoin':'round',style:'cursor:pointer'},gH);sp.__g=g;
+  const ys=c.map(q=>q[1]);Z[g].parts.push({sp,cx:sx,cy:Math.min(...ys),n:c.length,lbl:`${g} · pt ${i+2}`});
+  c.forEach(q=>sat.push(q));
+ });
 }
 // dots
 const dots=[];
@@ -245,10 +257,12 @@ for(const p of P){const c=el('circle',{cx:X(p.lon),cy:Y(p.lat),fill:ZC[p.g],stro
 // zone labels: pill tags (screen-size), nudged apart where zones crowd together
 const NUDGE={9:[0,24],10:[-6,26],11:[0,-22],12:[18,0],5:[0,-18],6:[0,20],4:[-18,10],3:[-14,-6],2:[0,-14],8:[0,16],7:[8,-6]};
 const tags={};
+const ptags=[];
+for(let g=1;g<=12;g++)for(const pt of Z[g].parts){const t=el('g',{class:'zlbl'},gZ);t.__g=g;const w=pt.lbl.length*6.6+14;el('rect',{x:-w/2,y:-10,width:w,height:20,rx:10,fill:'#fff',stroke:ZC[g],'stroke-width':1.2,'stroke-dasharray':'3 2'},t);const tx=el('text',{x:0,y:4,'text-anchor':'middle','font-size':11,fill:ZC[g]},t);tx.textContent=pt.lbl;t.__x=pt.cx;t.__y=pt.cy;ptags.push(t);}
 for(let g=1;g<=12;g++){const t=el('g',{class:'zlbl'},gZ);t.__g=g;const r=el('rect',{x:-15,y:-11,width:30,height:22,rx:11,fill:'#fff',stroke:ZC[g],'stroke-width':1.5},t);const tx=el('text',{x:0,y:4.5,'text-anchor':'middle','font-size':12.5,fill:ZC[g]},t);tx.textContent=g;tags[g]=t;}
 // view
-const xs=core.map(p=>X(p.lon)),ys=core.map(p=>Y(p.lat));
-const full={x0:Math.min(...xs)-MI*.35,x1:Math.max(...xs)+MI*.35,y0:Math.min(...ys)-MI*.35,y1:Math.max(...ys)+MI*.35};
+const xs=core.map(p=>X(p.lon)).concat(sat.map(q=>q[0])),ys=core.map(p=>Y(p.lat)).concat(sat.map(q=>q[1]));
+const full={x0:Math.min(...xs)-MI*.3,x1:Math.max(...xs)+MI*.3,y0:Math.min(...ys)-MI*.45,y1:Math.max(...ys)+MI*.3};
 let k=1,tx=0,ty=0,base=1;
 const Wd=()=>svg.clientWidth,Hd=()=>svg.clientHeight;
 function fit(b){const w=Wd(),h=Hd();k=Math.min(w/(b.x1-b.x0),h/(b.y1-b.y0));tx=(w-(b.x1-b.x0)*k)/2-b.x0*k;ty=(h-(b.y1-b.y0)*k)/2-b.y0*k;apply();}
@@ -263,6 +277,7 @@ function apply(){
  apt.setAttribute('font-size',11/k);apt.style.strokeWidth=3/k;
  for(const g of sh)g.setAttribute('transform',`translate(${g.__x},${g.__y}) scale(${1/k})`);
  const tagOn=z<3.2;
+ for(const t of ptags){t.setAttribute('transform',`translate(${t.__x},${t.__y}) translate(0,${-16/k}) scale(${1/k})`);t.style.display=tagOn?'':'none';}
  for(let g=1;g<=12;g++){const n=NUDGE[g]||[0,0];tags[g].setAttribute('transform',`translate(${Z[g].cx+n[0]/k*(z>1.6?0:1)},${Z[g].cy+n[1]/k*(z>1.6?0:1)}) scale(${1/k})`);tags[g].style.display=tagOn?'':'none';}
 }
 function zoomAt(f,cx,cy){const nk=Math.max(base*.8,Math.min(base*14,k*f));f=nk/k;tx=cx-(cx-tx)*f;ty=cy-(cy-ty)*f;k=nk;apply();}
@@ -285,12 +300,12 @@ function hit(cx,cy){const t=document.elementFromPoint(cx,cy);if(!t||!svg.contain
 function zoneAt(cx,cy){const h=hit(cx,cy);return h?(h.p?h.p.g:h.g):null;}
 const tip=document.getElementById('tip');let hot=null;
 function hover(e){const h=hit(e.clientX,e.clientY);const g=h?(h.p?h.p.g:h.g):null;
- if(hot!==g){if(hot)Z[hot].hp.setAttribute('fill-opacity',.13);if(g)Z[g].hp.setAttribute('fill-opacity',.28);hot=g;}
+ if(hot!==g){if(hot){Z[hot].hp.setAttribute('fill-opacity',.13);Z[hot].parts.forEach(p=>p.sp.setAttribute('fill-opacity',.13));}if(g){Z[g].hp.setAttribute('fill-opacity',.28);Z[g].parts.forEach(p=>p.sp.setAttribute('fill-opacity',.28));}hot=g;}
  if(!h){hideTip();return;}
  const fmt=n=>n?n.toLocaleString():'—';
- tip.innerHTML=h.p?`<div class="k" style="color:${ZC[h.p.g]}">Zone ${h.p.g} · ${NM[h.p.g]}</div><b>${h.p.addr}</b><div class="m">${fmt(h.p.sf)} SF${h.p.x?' · '+h.p.x:''}</div><div class="m" style="margin-top:4px">Click to open the zone report</div>`:`<div class="k" style="color:${ZC[g]}">Zone ${g}</div><b>${NM[g]}</b><div class="m">${Z[g].n} buildings · click to open the report</div>`;
+ tip.innerHTML=h.p?`<div class="k" style="color:${ZC[h.p.g]}">Zone ${h.p.g} · ${NM[h.p.g]}</div><b>${h.p.addr}</b><div class="m">${fmt(h.p.sf)} SF${h.p.x?' · '+h.p.x:''}</div><div class="m" style="margin-top:4px">Click to open the zone report</div>`:`<div class="k" style="color:${ZC[g]}">Zone ${g}</div><b>${NM[g]}</b><div class="m">${Z[g].parts.length?`Main area plus ${Z[g].parts.length} smaller pocket${Z[g].parts.length>1?'s':''} (dashed) · `:''}click to open the report</div>`;
  tip.style.display='block';const r=svg.getBoundingClientRect();let x=e.clientX-r.left+14,y=e.clientY-r.top+14;if(x+280>r.width)x-=296;if(y+110>r.height)y-=120;tip.style.left=x+'px';tip.style.top=y+'px';}
-function hideTip(){tip.style.display='none';if(hot){Z[hot].hp.setAttribute('fill-opacity',.13);hot=null;}}
+function hideTip(){tip.style.display='none';if(hot){Z[hot].hp.setAttribute('fill-opacity',.13);Z[hot].parts.forEach(p=>p.sp.setAttribute('fill-opacity',.13));hot=null;}}
 // scroll buttons
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.go).scrollIntoView({behavior:'smooth'}));
 // tabs + routing
