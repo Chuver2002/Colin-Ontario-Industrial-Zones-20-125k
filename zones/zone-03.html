@@ -124,19 +124,6 @@ table.cmp td a{font-size:11.5px;color:var(--muted)}
 .cempty{padding:22px;color:var(--muted);font-size:14px}
 .cpin{cursor:pointer}
 .cpin text{font-weight:700;pointer-events:none}
-
-/* v2: compact broker card + booking */
-.agent{padding:16px;text-align:left}
-.agent .top2{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.agent img.hs{width:58px;height:58px;margin:0}
-.agent .nm{font-size:16px}
-.agent .ttl{font-size:12px;margin:0;line-height:1.35}
-.agent .ln{font-size:13px;padding:6px 0}
-.agent .bk{display:flex;justify-content:center;gap:6px;margin-top:10px;background:#121212;color:#fff;text-decoration:none;font-weight:600;font-size:13.5px;border-radius:9px;padding:10px}
-.agent .lg{display:none}
-#map{touch-action:pan-y}
-@media(hover:hover){#map{touch-action:none}}
-@media(max-width:700px){.cta .acts .btn{white-space:normal;text-align:center;justify-content:center}}
 </style>
 </head>
 <body>
@@ -154,11 +141,13 @@ table.cmp td a{font-size:11.5px;color:var(--muted)}
     <div class="meta">Zone report · Updated Nov 23, 2026 · Market data through Q3 2026</div>
   </div>
     <aside class="card agent" aria-label="Your broker">
-      <div class="top2"><img class="hs" src="https://chuver2002.github.io/Colin-Ontario-Industrial-Zones-20-125k/zones/colin-huver.jpg" alt="Colin Huver"><div><div class="nm">Colin Huver</div><div class="ttl">Broker Associate · Foremost Commercial Real Estate Services</div></div></div>
+      <img class="hs" src="https://chuver2002.github.io/Colin-Ontario-Industrial-Zones-20-125k/zones/colin-huver.jpg" alt="Colin Huver">
+      <div class="nm">Colin Huver</div>
+      <div class="ttl">Broker Associate · Foremost Commercial Real Estate Services</div>
       <div class="ln"><span>Phone</span><a href="tel:+19098153281">(909) 815-3281</a></div>
       <div class="ln"><span>Email</span><a href="mailto:c.huver@foremost-cre.com?subject=Zone%203%20%E2%80%94%20Campus%20Bon%20View%20Cucamonga">c.huver@foremost-cre.com</a></div>
       <div class="ln"><span>DRE</span><b>#02196649</b></div>
-      <a class="bk" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3-Z_pqhQsr3ViaCR3iK_ksJdt85jLiMjYIFkw3pvTXlh34btRhcaaSoHfjKJwiDKhaIsojkgXu" target="_blank" rel="noopener">📅 Book a 30-min call</a>
+      <div class="ln"><span>Office</span><span style="color:var(--ink);text-align:right">1614 E. Holt Blvd., Ste 100<br>Ontario, CA 91761</span></div>
       <img class="lg" src="https://chuver2002.github.io/Colin-Ontario-Industrial-Zones-20-125k/zones/foremost-logo.jpg" alt="Foremost Commercial">
     </aside>
   </div>
@@ -172,7 +161,7 @@ table.cmp td a{font-size:11.5px;color:var(--muted)}
         <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#159d6d"/></svg>Industrial buildings in this zone (dot size = building SF)</span>
         <span><svg width="12" height="12"><circle cx="6" cy="6" r="4" fill="#c9c7c0"/></svg>Neighboring zones</span>
         <span><svg width="22" height="12"><rect x="1" y="1" width="20" height="10" rx="5" fill="#121212"/></svg>Comps on the map: <b id="pinlbl" style="margin-left:3px">Leases signed</b> (switch below)</span>
-        <span>Drag to pan · Ctrl/⌘ + scroll or +/− to zoom · tap a dot or numbered pin for details</span>
+        <span>Drag to pan · Ctrl/Cmd + scroll or +/− to zoom · tap a dot or numbered pin for details</span>
       </div>
     </div>
   </section>
@@ -242,7 +231,7 @@ table.cmp td a{font-size:11.5px;color:var(--muted)}
     </div>
     <div class="card pad">
       <h2>If you own a building here</h2>
-      <ul class="clean tips"><li>Vacancy in IE West is falling (6.1% → 4.8% this year per Lee &amp; Associates), so well-located 20k–125k SF buildings are leasing again.</li><li>Sale pricing has softened to about $246/SF on average, while recent Ontario trades show strong buyers for quality and yard-heavy (IOS) sites.</li><li>Renewing a tenant early usually beats downtime plus free rent. Know your tenant&#x27;s expiration and talk 12+ months out.</li><li>New supply is picking up (5.8M SF under construction), so positioning matters: power, yard, clear height and loading set the rent.</li></ul>
+      <ul class="clean tips"><li>Vacancy in IE West is falling (6.1% to 4.8% this year per Lee &amp; Associates), so well-located 20k–125k SF buildings are leasing again.</li><li>Sale pricing has softened to about $246/SF on average, while recent Ontario trades show strong buyers for quality and yard-heavy (IOS) sites.</li><li>Renewing a tenant early usually beats downtime plus free rent. Know your tenant&#x27;s expiration and talk 12+ months out.</li><li>New supply is picking up (5.8M SF under construction), so positioning matters: power, yard, clear height and loading set the rent.</li></ul>
     </div>
   </section>
 
@@ -250,12 +239,11 @@ table.cmp td a{font-size:11.5px;color:var(--muted)}
     <div class="cta">
       <div>
         <h2>Questions about your building or lease in Zone 3?</h2>
-        <p>Current availabilities and rent comps for your size range, a renewal leverage report, or a value for your building — usually within 48 hours. No cost, no obligation.</p>
+        <p>I can share current availabilities, recent rent and sale comps for your size range, and what your space is worth today. No cost, no obligation.</p>
         <div class="ph"><img src="https://chuver2002.github.io/Colin-Ontario-Industrial-Zones-20-125k/zones/colin-huver.jpg" alt="Colin Huver"><div class="who"><b>Colin Huver</b><br>Broker Associate · Foremost Commercial Real Estate Services<br>1614 E. Holt Blvd., Suite 100, Ontario, CA 91761<br>DRE #02196649</div></div>
       </div>
       <div class="acts">
-        <a class="btn" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3-Z_pqhQsr3ViaCR3iK_ksJdt85jLiMjYIFkw3pvTXlh34btRhcaaSoHfjKJwiDKhaIsojkgXu" target="_blank" rel="noopener">📅 Book a 30-min call</a>
-        <a class="btn ghost" href="tel:+19098153281">Call (909) 815-3281</a>
+        <a class="btn" href="tel:+19098153281">Call (909) 815-3281</a>
         <a class="btn ghost" href="mailto:c.huver@foremost-cre.com?subject=Zone%203%20%E2%80%94%20Campus%20Bon%20View%20Cucamonga">Email c.huver@foremost-cre.com</a>
       </div>
     </div>
