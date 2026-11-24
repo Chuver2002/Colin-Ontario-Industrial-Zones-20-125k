@@ -124,6 +124,19 @@ table.cmp td a{font-size:11.5px;color:var(--muted)}
 .cempty{padding:22px;color:var(--muted);font-size:14px}
 .cpin{cursor:pointer}
 .cpin text{font-weight:700;pointer-events:none}
+
+/* v2: compact broker card + booking */
+.agent{padding:16px;text-align:left}
+.agent .top2{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.agent img.hs{width:58px;height:58px;margin:0}
+.agent .nm{font-size:16px}
+.agent .ttl{font-size:12px;margin:0;line-height:1.35}
+.agent .ln{font-size:13px;padding:6px 0}
+.agent .bk{display:flex;justify-content:center;gap:6px;margin-top:10px;background:#121212;color:#fff;text-decoration:none;font-weight:600;font-size:13.5px;border-radius:9px;padding:10px}
+.agent .lg{display:none}
+#map{touch-action:pan-y}
+@media(hover:hover){#map{touch-action:none}}
+@media(max-width:700px){.cta .acts .btn{white-space:normal;text-align:center;justify-content:center}}
 </style>
 </head>
 <body>
@@ -138,16 +151,14 @@ table.cmp td a{font-size:11.5px;color:var(--muted)}
     <div class="eyebrow"><i></i>Ontario Industrial · Zone 9 of 12</div>
     <h1>Milliken Corridor</h1>
     <p class="lede">Milliken Ave from SR-60 north to Mission Blvd, with the Wanamaker, Rockefeller, Wall, Vanderbilt and Auto Center Dr business parks on either side.</p>
-    <div class="meta">Zone report · Updated Nov 23, 2026 · Market data through Q3 2026</div>
+    <div class="meta">Zone report · Updated Nov 24, 2026 · Market data through Q3 2026</div>
   </div>
     <aside class="card agent" aria-label="Your broker">
-      <img class="hs" src="https://chuver2002.github.io/Colin-Ontario-Industrial-Zones-20-125k/zones/colin-huver.jpg" alt="Colin Huver">
-      <div class="nm">Colin Huver</div>
-      <div class="ttl">Broker Associate · Foremost Commercial Real Estate Services</div>
+      <div class="top2"><img class="hs" src="https://chuver2002.github.io/Colin-Ontario-Industrial-Zones-20-125k/zones/colin-huver.jpg" alt="Colin Huver"><div><div class="nm">Colin Huver</div><div class="ttl">Broker Associate · Foremost Commercial Real Estate Services</div></div></div>
       <div class="ln"><span>Phone</span><a href="tel:+19098153281">(909) 815-3281</a></div>
       <div class="ln"><span>Email</span><a href="mailto:c.huver@foremost-cre.com?subject=Zone%209%20%E2%80%94%20Milliken%20Corridor">c.huver@foremost-cre.com</a></div>
       <div class="ln"><span>DRE</span><b>#02196649</b></div>
-      <div class="ln"><span>Office</span><span style="color:var(--ink);text-align:right">1614 E. Holt Blvd., Ste 100<br>Ontario, CA 91761</span></div>
+      <a class="bk" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3-Z_pqhQsr3ViaCR3iK_ksJdt85jLiMjYIFkw3pvTXlh34btRhcaaSoHfjKJwiDKhaIsojkgXu" target="_blank" rel="noopener">📅 Book a 30-min call</a>
       <img class="lg" src="https://chuver2002.github.io/Colin-Ontario-Industrial-Zones-20-125k/zones/foremost-logo.jpg" alt="Foremost Commercial">
     </aside>
   </div>
@@ -185,13 +196,13 @@ table.cmp td a{font-size:11.5px;color:var(--muted)}
 
   <section>
     <h2>Ontario market at a glance</h2>
-    <p class="sub">Ontario industrial buildings of 20,000–125,000 SF · Foremost CRE research · leases and sales signed May 20 – Nov 17, 2026; listings as of Nov 23, 2026</p>
+    <p class="sub">Ontario industrial buildings of 20,000–125,000 SF · Foremost CRE research · leases and sales signed May 20 – Nov 17, 2026; listings as of Nov 24, 2026</p>
     <div class="grid4"><div class="card tile loc"><div class="v">$1.20</div><div class="l">Median asking rent on leases signed</div><div class="s">41 leases · 2.4M SF · middle half $1.15–$1.29/SF/mo</div></div><div class="card tile loc"><div class="v">$1.18</div><div class="l">Median asking rent, space for lease now</div><div class="s">62 spaces · 3.5M SF · middle half $1.10–$1.35</div></div><div class="card tile loc"><div class="v">$238/SF</div><div class="l">Median price, buildings sold</div><div class="s">9 sales · $125M total · range $159–$420/SF</div></div><div class="card tile loc"><div class="v">$295/SF</div><div class="l">Median asking price, for sale now</div><div class="s">17 buildings listed · priced range $235–$378/SF</div></div></div>
   </section>
 
   <section id="comps">
     <h2>Recent comps in and around Zone 9</h2>
-    <p class="sub">The most recent deals and listings in this zone first, then nearby buildings within about a mile. The numbered markers match the pins on the map above. Signed deals May 20 – Nov 17, 2026; listings as of Nov 23, 2026. Rents are asking rents, $/SF/mo. Source: CoStar and Foremost CRE research.</p>
+    <p class="sub">The most recent deals and listings in this zone first, then nearby buildings within about a mile. The numbered markers match the pins on the map above. Signed deals May 20 – Nov 17, 2026; listings as of Nov 24, 2026. Rents are asking rents, $/SF/mo. Source: CoStar and Foremost CRE research.</p>
     <div class="ctabs" role="tablist"><button data-t="ct-lease" class="on">Leases signed<span>10</span></button><button data-t="ct-sale" class="">Sales<span>5</span></button><button data-t="ct-forlease" class="">For lease now<span>10</span></button><button data-t="ct-forsale" class="">For sale now<span>3</span></button></div>
     <div class="card ctbl on" id="ct-lease"><table><thead><tr><th></th><th>Address</th><th class="n">SF leased</th><th class="n">Asking rent</th><th>Deal</th><th>Signed</th><th>Where</th></tr></thead><tbody><tr><td><span class="mk">L1</span></td><td><b>1555 S DuPont Ave</b></td><td class="n">31,392</td><td class="n">$1.20<small>/SF/mo</small></td><td>Direct</td><td>Nov 17, 2026</td><td><span class="zt in">This zone</span></td></tr><tr><td><span class="mk">L2</span></td><td><b>1351 Doubleday Ave</b></td><td class="n">72,088</td><td class="n">—</td><td>Direct · 5 Years</td><td>Aug 15, 2026</td><td><span class="zt in">This zone</span></td></tr><tr><td><span class="mk">L3</span></td><td><b>1555 S DuPont Ave</b></td><td class="n">31,292</td><td class="n">$1.20<small>/SF/mo</small></td><td>Direct</td><td>Jul 23, 2026</td><td><span class="zt in">This zone</span></td></tr><tr><td><span class="mk">L4</span></td><td><b>2350 S Milliken Ave</b></td><td class="n">71,091</td><td class="n">$1.10<small>/SF/mo</small></td><td>Direct · Triple Net</td><td>Jul 20, 2026</td><td><span class="zt in">This zone</span></td></tr><tr><td><span class="mk">L5</span></td><td><b>1690 Milliken Ave</b><small>Bldg 6</small></td><td class="n">52,387</td><td class="n">$1.20<small>/SF/mo</small></td><td>Sublet · Modified Gross · 1 Year 5 Months</td><td>Jun 29, 2026</td><td><span class="zt in">This zone</span></td></tr><tr><td><span class="mk">L6</span></td><td><b>4755 Zinfandel Ct</b></td><td class="n">37,384</td><td class="n">$1.16<small>/SF/mo</small></td><td>Direct · Full Service</td><td>Jun 16, 2026</td><td><span class="zt in">This zone</span></td></tr><tr><td><span class="mk near">L7</span></td><td><b>930 S Rockefeller Ave</b><small>Bldg 2</small></td><td class="n">94,016</td><td class="n">—</td><td>Direct</td><td>Nov 16, 2026</td><td><span class="zt">Nearby · Zone 11</span></td></tr><tr><td><span class="mk near">L8</span></td><td><b>4663 E Guasti Rd</b></td><td class="n">33,003</td><td class="n">$0.90<small>/SF/mo</small></td><td>Direct</td><td>Nov 3, 2026</td><td><span class="zt">Nearby · Zone 11</span></td></tr><tr><td><span class="mk near">L9</span></td><td><b>1777 S Vintage Ave</b></td><td class="n">90,000</td><td class="n">$1.15<small>/SF/mo</small></td><td>Sublet · 5 Years 6 Months</td><td>Nov 2, 2026</td><td><span class="zt">Nearby · Zone 12</span></td></tr><tr><td><span class="mk near">L10</span></td><td><b>4710 E Guasti Rd</b></td><td class="n">77,668</td><td class="n">—</td><td>Direct</td><td>Oct 19, 2026</td><td><span class="zt">Nearby · Zone 11</span></td></tr></tbody></table></div>
 <div class="card ctbl" id="ct-sale"><table><thead><tr><th></th><th>Address</th><th class="n">Bldg SF</th><th class="n">Price</th><th class="n">$/SF</th><th>Sold</th><th>Where</th></tr></thead><tbody><tr><td><span class="mk">S1</span></td><td><b>1260 S Dupont Ave</b></td><td class="n">27,801<small>built 1999</small></td><td class="n">$11.7M</td><td class="n">$420</td><td>Jul 16, 2026</td><td><span class="zt in">This zone</span></td></tr><tr><td><span class="mk near">S2</span></td><td><b>5001 Ontario Mills Pky</b></td><td class="n">36,000<small>built 2018</small></td><td class="n">$8.6M</td><td class="n">$238</td><td>Aug 4, 2026</td><td><span class="zt">Nearby · Zone 11</span></td></tr><tr><td><span class="mk near">S3</span></td><td><b>2880 Jurupa St</b></td><td class="n">103,646<small>built 2012</small></td><td class="n">$23.1M</td><td class="n">$223</td><td>Jul 29, 2026<small>part of a portfolio sale</small></td><td><span class="zt">Nearby · Zone 7</span></td></tr><tr><td><span class="mk near">S4</span></td><td><b>4290 E Brickell St</b></td><td class="n">101,134<small>built 1988</small></td><td class="n">$23.2M</td><td class="n">$229</td><td>Jul 14, 2026</td><td><span class="zt">Nearby · Zone 10</span></td></tr><tr><td><span class="mk near">S5</span></td><td><b>5651 E Francis St</b></td><td class="n">58,929<small>built 1988</small></td><td class="n">$14.6M</td><td class="n">$248</td><td>Jun 3, 2026</td><td><span class="zt">Nearby · Zone 12</span></td></tr></tbody></table></div>
@@ -239,11 +250,12 @@ table.cmp td a{font-size:11.5px;color:var(--muted)}
     <div class="cta">
       <div>
         <h2>Questions about your building or lease in Zone 9?</h2>
-        <p>I can share current availabilities, recent rent and sale comps for your size range, and what your space is worth today. No cost, no obligation.</p>
+        <p>Current availabilities and rent comps for your size range, a renewal leverage report, or a value for your building — usually within 48 hours. No cost, no obligation.</p>
         <div class="ph"><img src="https://chuver2002.github.io/Colin-Ontario-Industrial-Zones-20-125k/zones/colin-huver.jpg" alt="Colin Huver"><div class="who"><b>Colin Huver</b><br>Broker Associate · Foremost Commercial Real Estate Services<br>1614 E. Holt Blvd., Suite 100, Ontario, CA 91761<br>DRE #02196649</div></div>
       </div>
       <div class="acts">
-        <a class="btn" href="tel:+19098153281">Call (909) 815-3281</a>
+        <a class="btn" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3-Z_pqhQsr3ViaCR3iK_ksJdt85jLiMjYIFkw3pvTXlh34btRhcaaSoHfjKJwiDKhaIsojkgXu" target="_blank" rel="noopener">📅 Book a 30-min call</a>
+        <a class="btn ghost" href="tel:+19098153281">Call (909) 815-3281</a>
         <a class="btn ghost" href="mailto:c.huver@foremost-cre.com?subject=Zone%209%20%E2%80%94%20Milliken%20Corridor">Email c.huver@foremost-cre.com</a>
       </div>
     </div>
